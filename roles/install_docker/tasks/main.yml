@@ -1,0 +1,6 @@
+---
+
+- name: Install docker
+  ansible.builtin.shell: echo 'toto'
+
+...
