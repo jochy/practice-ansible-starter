@@ -1,3 +1,4 @@
 ssh_key/*
 !ssh_key/.keep
 cloud-init.yml
+hosts.yml

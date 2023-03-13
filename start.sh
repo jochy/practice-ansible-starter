@@ -9,10 +9,18 @@ fi
 multipass delete webserver database 2> /dev/null ; multipass purge
 
 multipass launch --name webserver --cpus 1 --memory 1G --cloud-init cloud-init.yml
-multipass launch --name database --cpus 1 --memory 1G --cloud-init cloud-init.yml
+multipass launch --name database  --cpus 1 --memory 1G --cloud-init cloud-init.yml
 
 echo "Extracting webserver ip"
-multipass info --format csv webserver | sed -n 2p | awk -F "\"*,\"*" '{print $3}'
+IP=$(multipass info --format csv webserver | sed -n 2p | awk -F "\"*,\"*" '{print $3}')
+echo $IP
+sed "s/webserver.mhost.net/${IP}/g" hosts.yml.template > hosts.yml
 
 echo "Extracting database ip"
-multipass info --format csv database | sed -n 2p | awk -F "\"*,\"*" '{print $3}'
+IP=$(multipass info --format csv database | sed -n 2p | awk -F "\"*,\"*" '{print $3}')
+echo $IP
+sed "s/database.mhost.net/${IP}/g" hosts.yml > tmp.yml
+
+echo "Writing hosts.yml for Ansible with the right ips"
+rm hosts.yml
+mv tmp.yml hosts.yml
