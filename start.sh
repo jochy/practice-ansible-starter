@@ -24,3 +24,5 @@ sed "s/database.mhost.net/${IP}/g" hosts.yml > tmp.yml
 echo "Writing hosts.yml for Ansible with the right ips"
 rm hosts.yml
 mv tmp.yml hosts.yml
+
+ansible-galaxy install -r requirements.yml
