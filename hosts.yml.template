@@ -5,6 +5,8 @@ webserver:
       ansible_ssh_host: webserver.mhost.net
       ansible_ssh_port: 22
       ansible_ssh_private_key_file: ssh_key/multipass-ssh-key
+  vars:
+    database_host: database.mhost.net
 
 database:
   hosts:

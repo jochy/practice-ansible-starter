@@ -6,8 +6,10 @@ then
     echo "\n      - $(cat ssh_key/multipass-ssh-key.pub)" >> cloud-init.yml
 fi
 
+echo "Removing previous vm"
 multipass delete webserver database 2> /dev/null ; multipass purge
 
+echo "Creating vm"
 multipass launch --name webserver --cpus 1 --memory 1G --cloud-init cloud-init.yml
 multipass launch --name database  --cpus 1 --memory 1G --cloud-init cloud-init.yml
 
