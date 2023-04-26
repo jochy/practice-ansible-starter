@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 if [[ ! -f ssh_key/multipass-ssh-key ]]
 then
     ssh-keygen -C vmuser -f ssh_key/multipass-ssh-key -N '' -q
-    echo "\n      - $(cat ssh_key/multipass-ssh-key.pub)" >> cloud-init.yml
+    echo -e "\n      - $(cat ssh_key/multipass-ssh-key.pub)" >> cloud-init.yml
 fi
 
 echo "Removing previous vm"
