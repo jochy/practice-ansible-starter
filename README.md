@@ -10,7 +10,27 @@ Starter used to practice ansible. Must be running on Linux or Mac. If running on
 
 * [Multipass](https://multipass.run/install)
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible)
-  * Ansible must be installed using Git Bash for Windows
+
+### Windows particularity
+
+If on Windows, you must use linux (Ansible works only with a linux environment):
+* VirtualBox with a virtual machine (prefer latest ubuntu)
+* Use WSL2
+
+With WSL2, you need to add a file `/etc/wsl.conf` with at least this content:
+```
+[boot]
+systemd=true
+
+[automount]
+options = "metadata"
+```
+
+Then you need to shutdown your WSL using Powershell (on windows) `wsl --shutdown`, then you need to update wsl2 `wsl --update` then you can restart wsl2. 
+
+## Fedora particulary
+
+Fedora has a firewall that may block the use of multipass. This is a known issue. If you encounter any issue while creating the virtual machines, you can disable the firewall by using this command: `sudo systemctl stop firewalld`. Do not forget to enable it after the practice. 
 
 ## Start virtual machines
 
@@ -22,8 +42,6 @@ It will create 2 virtual machines:
 
 ## Make sure everything is working fine
 
-First, run the following command: `ansible-galaxy install -r requirements.yml`
-
 Run `./webserver.sh`. It may ask you to trust the sshkey for the host, accept it. 
 If there is no error, then everything is working fine, else make sure:
 
@@ -32,6 +50,24 @@ If there is no error, then everything is working fine, else make sure:
   * You should see that ubu1 and ubu2 are running
 * You can login into the vms using: `multipass shell webserver` and `multipass shell database`
 * IP matches between `multipass list` and `hosts.yml` file
+* Try another driver
+  * Ubuntu: 
+    ```
+    sudo apt install libvirt-daemon-system
+    sudo snap connect multipass:libvirt
+    multipass stop --all
+    multipass set local.driver=libvirt
+    ./start.sh
+    ```
+  * Fedora: 
+    ```
+    sudo dnf install @virtualization
+    sudo systemctl start libvirtd
+    sudo snap connect multipass:libvirt
+    multipass stop --all
+    multipass set local.driver=libvirt
+    ./start.sh
+    ```
 
 ## Shutdown and clean up
 
