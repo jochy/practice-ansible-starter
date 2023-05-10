@@ -2,7 +2,7 @@
 ### LAST NAME : DOE
 ### First name : John
 
-Starter used to practice ansible. Must be running on Linux or Mac. If running on Windows, please use Git bash (or use a VM).
+Starter used to practice ansible. Must be running on Linux or Mac. If running on Windows, please use a VM with VirtualBox or WSL.
 
 # Getting started
 
